@@ -1,27 +1,13 @@
 var  express    =require("express"),
      app        =express(),
      bodyParser =require("body-parser"),
-     mongoose   =require("mongoose");
+     mongoose   =require("mongoose"),
+     campground =require("./models/campground"),
+     seedDB     =require("./seed.js");
      mongoose.connect('mongodb+srv://rifad:rifad2023@cluster1-vyqk2.mongodb.net/yelp_Camp?retryWrites=true&w=majority',{ useNewUrlParser: true,useUnifiedTopology: true  })
-
-
+      seedDB()
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine","ejs");
-
-//campgroundSchema
-var campgroundSchema= new mongoose.Schema({
-    name:String,
-    image:String,
-    description:String
-})
-
-//campgroundMode
-var campground=mongoose.model("campground",campgroundSchema);
-
-
-
-
-
 app.get("/",function(req,res){
     res.render("landing")
 })
@@ -69,7 +55,7 @@ app.post("/campgrounds",function(req,res){
 //show route
 app.get("/campgrounds/:id",function(req,res){
     var id=req.params.id
-    campground.findById(id,function(error,camp){
+    campground.findById(id).populate("comments").exec(function(error,camp){
         if(error)
         {
             console.log("cant find");
@@ -82,6 +68,6 @@ app.get("/campgrounds/:id",function(req,res){
     })
 })
 
-app.listen(3000,function(){
+app.listen(process.env.PORT ||3000,function(){
     console.log("server started");
 })

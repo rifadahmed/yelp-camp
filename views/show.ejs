@@ -2,4 +2,8 @@
 <h1> <%=camp.name %></h1>
 <img src="<%=camp.image%>" alt="">
 <p><%=camp.description%></p>
+<%camp.comments.forEach(function(x){%>
+<p> <%=x.text%>---- <%=x.author%></p>
+
+<%})%>
 <%- include ("partials/footer")%>
