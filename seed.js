@@ -45,7 +45,6 @@ function campDelete(){
                             newCamp.comments.push(newComment);
                             newCamp.save();
                         }
-                        console.log(newCamp)
                     }
                     )
                 }

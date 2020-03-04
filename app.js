@@ -2,6 +2,7 @@ var  express    =require("express"),
      app        =express(),
      bodyParser =require("body-parser"),
      mongoose   =require("mongoose"),
+     comment    =require("./models/comment"),
      campground =require("./models/campground"),
      seedDB     =require("./seed.js");
      mongoose.connect('mongodb+srv://rifad:rifad2023@cluster1-vyqk2.mongodb.net/yelp_Camp?retryWrites=true&w=majority',{ useNewUrlParser: true,useUnifiedTopology: true  })
@@ -20,7 +21,7 @@ app.get("/campgrounds",function(req,res){
            console.log("cant find");
        }
        else{
-        res.render("index",{campgrounds:allCampgrounds})
+        res.render("campgrounds/index",{campgrounds:allCampgrounds})
        }
    })
     
@@ -28,7 +29,7 @@ app.get("/campgrounds",function(req,res){
 
 //new route
 app.get("/campgrounds/new",function(req,res){
-    res.render("new");
+    res.render("campgrounds/new");
 })
 
 
@@ -62,12 +63,64 @@ app.get("/campgrounds/:id",function(req,res){
         }
         else{
        
-            console.log(camp);
-            res.render("show",{camp:camp})
+            res.render("campgrounds/show",{camp:camp})
     }
     })
 })
 
+//new route for comments
+app.get("/campgrounds/:id/comments/new",function(req,res){
+    campground.findById(req.params.id,function(error,findData){
+        if(error)
+        {
+            console.log(error)
+        }
+        else
+        {
+           // console.log(findData);
+            res.render("comments/new",{camp:findData})
+        }
+    })
+    
+})
+
+//crate route for comments
+app.post("/campgrounds/:id/comments",function(req,res){
+    var newComment=req.body.comment;
+    campground.findById(req.params.id,function(error,findCamp){
+        if(error)
+        {
+            console.log(error)
+        }
+        else
+        {
+            comment.create(newComment,function(error,newComment){
+                if(error)
+                {
+                    console.log(error)
+                }
+                else
+                {
+                    findCamp.comments.push(newComment);
+                    findCamp.save(function(error,data){
+                        if(error)
+                        {
+                            console.log(error)
+                        }
+                        else{
+                            console.log(data);
+                            res.redirect("/campgrounds/"+req.params.id)
+                        }
+                    })
+                }
+            })
+
+            // console.log(findData.comments)
+            // findData.save();
+
+        }
+    })
+})
 app.listen(process.env.PORT ||3000,function(){
     console.log("server started");
 })
