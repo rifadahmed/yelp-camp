@@ -7,6 +7,7 @@ var  express    =require("express"),
      seedDB     =require("./seed.js");
      mongoose.connect('mongodb+srv://rifad:rifad2023@cluster1-vyqk2.mongodb.net/yelp_Camp?retryWrites=true&w=majority',{ useNewUrlParser: true,useUnifiedTopology: true  })
       seedDB()
+    app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine","ejs");
 app.get("/",function(req,res){
