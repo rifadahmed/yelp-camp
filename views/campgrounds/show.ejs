@@ -23,6 +23,7 @@
                 <div class="card-body">
                     <h4 class="card-title" "> <a href=""><%=camp.name %></a></h4>
                   <p class="card-text"><%=camp.description%></p>
+                  <p>Added by <strong><%=camp.author.username%></strong> </p>
                   <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
               </div>
@@ -37,7 +38,7 @@
                           
                             <%camp.comments.forEach(function(x){%>
                                
-                                <p class="lead"><%=x.author%> says,</p>
+                                <p class="lead"><%=x.author.username%> says,</p>
                                 <spna> <%=x.text%></spna>
                                 <hr>
                                 

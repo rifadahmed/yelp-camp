@@ -21,40 +21,7 @@ var mongoose    =   require("mongoose")
     }
 function campDelete(){
     campground.remove({},function(error,removeData){
-    if(error){
-        console.log(error)
-    }
-    else
-    {
-        console.log("deleted");
-        data.forEach(function(x){
-            campground.create(x,function(error,newCamp){
-                if(error){
-                    console.log(error)
-                }
-                else
-                {
-                    console.log("camp added")
-                    Comment.create(dummyComment,function(error,newComment){
-                        if(error)
-                        {
-                            console.log(error)
-                        }
-                        else
-                        {
-                            newCamp.comments.push(newComment);
-                            newCamp.save();
-                        }
-                    }
-                    )
-                }
-               
-            })
-        }
-        
-        )
-       
-    }
+    
 })
 }
 module.exports=campDelete;
