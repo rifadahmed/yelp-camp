@@ -4,6 +4,7 @@ var  express                    =require("express"),
      mongoose                   =require("mongoose"),
      passport                   =require("passport"),
      LocalStrategy              =require("passport-local"),
+     methodOverride             =require("method-override"),
      campground                 =require("./models/campground"),
      comment                    =require("./models/comment"),
      user                       =require("./models/user")
@@ -13,6 +14,8 @@ var  express                    =require("express"),
           campgroundRoutes  =require("./routes/campgrounds"),
           indexRoutes       =require("./routes/index");
     app.use(express.static(__dirname + '/public'))
+    app.use(methodOverride('_method'))
+
     app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));

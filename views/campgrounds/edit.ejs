@@ -1,0 +1,17 @@
+<%- include("../partials/header")%>
+<br>
+<div class="container text-center" style="width: 30%;">
+<h1>Edit <strong><%=camp.name%></strong> </h1>
+<form action="/campgrounds/<%=camp._id%>/edit?_method=PUT" method="POST">
+    
+<input class="form-control" style="margin-top: 5px;" type="text" name="foundCamp[name]" value="<%=camp.name%>">
+
+<input class="form-control" style="margin-top: 5px;" type="text" name="foundCamp[image]"  value="<%=camp.image%>">
+
+<input class="form-control" style="margin-top: 5px;" type="text" name="foundCamp[description]"  value="<%=camp.description%>">
+
+<button style="margin-top: 5px;" class="btn btn-outline-primary btn-block">Submit</button>
+</form>
+
+</div>
+<%- include("../partials/footer")%>

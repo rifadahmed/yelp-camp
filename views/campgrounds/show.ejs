@@ -24,7 +24,16 @@
                     <h4 class="card-title" "> <a href=""><%=camp.name %></a></h4>
                   <p class="card-text"><%=camp.description%></p>
                   <p>Added by <strong><%=camp.author.username%></strong> </p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                
+                  <%if(currentUser && camp.author.id.equals(currentUser._id)){%>
+                  <a href="/campgrounds/<%=camp._id%>/edit" class="btn btn-warning">Edit</a>
+                    <div class="float-right">
+                        <form action="/campgrounds/<%=camp._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete</button>
+                          </form>
+                    </div>
+                <%}%>
+                  
                 </div>
               </div>
               <div class="card card-body bg-light">
@@ -39,9 +48,16 @@
                             <%camp.comments.forEach(function(x){%>
                                
                                 <p class="lead"><%=x.author.username%> says,</p>
-                                <spna> <%=x.text%></spna>
+                                <spna> <%=x.text%></spna><br>
+
+                                <%if(currentUser && x.author.id.equals(currentUser._id)){%>
+                                <a href="/campgrounds/<%=camp._id%>/comments/<%=x._id%>/edit" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="/campgrounds/<%=camp._id%>/comments/<%=x._id%>?_method=delete" method="POST">
+                                    <button  class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                               
                                 <hr>
-                                
+                                <%}%>
                                 <%})%>
                           
                       
