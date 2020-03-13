@@ -51,11 +51,13 @@
                                 <spna> <%=x.text%></spna><br>
 
                                 <%if(currentUser && x.author.id.equals(currentUser._id)){%>
-                                <a href="/campgrounds/<%=camp._id%>/comments/<%=x._id%>/edit" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="/campgrounds/<%=camp._id%>/comments/<%=x._id%>?_method=delete" method="POST">
-                                    <button  class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                    <div>
+                                        <form action="/campgrounds/<%=camp._id%>/comments/<%=x._id%>?_method=delete" method="POST">
+                                            <button  class="btn btn-danger btn-sm float-right">Delete</button>
+                                        </form>
+                                <a href="/campgrounds/<%=camp._id%>/comments/<%=x._id%>/edit" class="btn btn-warning btn-sm ">Edit</a>
                                
+                            </div>
                                 <hr>
                                 <%}%>
                                 <%})%>

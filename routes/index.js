@@ -21,6 +21,7 @@ router.post("/register",function(req,res){
         if(error)
         {
             console.log(error)
+            req.flash("userExist","A user with the given username is already registered");
             res.redirect("/register");
         }
         else
@@ -35,12 +36,15 @@ router.post("/register",function(req,res){
 
 //log in routr
 router.get("/login",function(req,res){
+
     res.render("login");
 })
 
 router.post("/login",passport.authenticate("local",{
-    failureRedirect: '/login',
-    successRedirect:"/campgrounds" 
+    successRedirect:"/campgrounds" ,
+   
+    failureRedirect: '/login'
+   
 }),function(req,res){
     res.send("logged in")
 })
@@ -48,6 +52,7 @@ router.post("/login",passport.authenticate("local",{
 //logout route
 router.get("/logout",function(req,res){
     req.logOut();
+    req.flash('logout', 'You are logged out.')
     res.redirect("/campgrounds");
 })
 

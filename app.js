@@ -9,7 +9,8 @@ var  express                    =require("express"),
      comment                    =require("./models/comment"),
      user                       =require("./models/user")
      mongoose.connect('mongodb+srv://rifad:rifad2023@cluster1-vyqk2.mongodb.net/yelp_Camp?retryWrites=true&w=majority',{ useNewUrlParser: true,useUnifiedTopology: true  })
-   
+     var flash = require('connect-flash')
+     app.use(flash())
       var commentRoutes     =require("./routes/comments"),
           campgroundRoutes  =require("./routes/campgrounds"),
           indexRoutes       =require("./routes/index");
@@ -27,6 +28,14 @@ passport.deserializeUser(user.deserializeUser());
 
 app.use(function(req,res,next){
     res.locals.currentUser=req.user;
+    res.locals.loginFirst=req.flash("loginFirst")
+    res.locals.logout=req.flash('logout')
+    res.locals.userExist=req.flash('userExist')
+    res.locals.campUpdated=req.flash("campUpdated")
+    res.locals.campDeleted=req.flash("campDeleted")
+    res.locals.commentAdded=req.flash("commentAdded")
+    res.locals.commentUpdated=req.flash("commentUpdated")
+    res.locals.commentDeleted=req.flash("commentDeleted")
     next();
 })
 
